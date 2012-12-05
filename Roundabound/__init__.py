@@ -108,7 +108,11 @@ class LogRotate:
         logging.debug('Log rotation done')
 
 def main(argv):
-    import json
+    try:
+        import json
+    except ImportError:
+        import simplejson
+
     import argparse
 
     parser = argparse.ArgumentParser()
