@@ -1,3 +1,5 @@
+# Needed to get with statement working in Python 2.5
+from __future__ import with_statement
 import glob
 import os
 import os.path
