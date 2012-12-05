@@ -39,16 +39,20 @@ class RotationSet:
     def rotate(self):
         now = time.time()
         for filename in glob.glob(self.file_pattern):
-            stat = os.stat(filename)
-            age = now - stat.st_mtime
+            try:
+                stat = os.stat(filename)
+                age = now - stat.st_mtime
 
-            logging.debug('Examining file %s; age %d' % (filename, age))
+                logging.debug('Examining file %s; age %d' % (filename, age))
 
-            if self.archive_age != None and age > self.archive_age:
-                self._archive(filename)
-            elif self.delete_age != None and age > self.delete_age:
-                self._do_action(lambda x: os.remove(filename))
-                logging.info('Deleted %s' % filename)
+                if self.archive_age != None and age > self.archive_age:
+                    self._archive(filename)
+                elif self.delete_age != None and age > self.delete_age:
+                    self._do_action(lambda x: os.remove(filename))
+                    logging.info('Deleted %s' % filename)
+            except WindowsError, e:
+                if e.winerror == 5:
+                    logging.warning('Access denied for "%s".' % filename)
 
         for filename in glob.glob(self.archive_file_pattern):
             stat = os.stat(filename)
