@@ -93,13 +93,17 @@ class LogRotate:
 
 def main(argv):
     import json
+    import argparse
 
-    if len(argv) < 2:
-        conf_name = './roundabound.cfg'
-    else:
-        conf_name = argv[1]
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--config', default='roundabound.cfg', help='the configuration file to use')
+    parser.add_argument('--verbosity', default='ERROR', help='indicates the verbosity of the output', choices=['DEBUG', 'INFO', 'WARN', 'ERROR'])
 
-    with open(conf_name, 'r') as config_file:
+    args = parser.parse_args(argv)
+
+    logging.basicConfig(level=getattr(logging, args.verbosity))
+
+    with open(args.config, 'r') as config_file:
         config = json.loads(config_file.read())
 
     logrotate = LogRotate(config)

@@ -28,7 +28,8 @@ Configuration is done in JSON:
 To run:
 
 ```
-python -m Roundabound [configfile]
+python -m Roundabound [-h] [--config CONFIG] [--verbosity {DEBUG,INFO,WARN,ERROR}]
 ```
 
-```configfile``` will default to ```roundabound.cfg``` if omitted.
+```CONFIG``` will default to ```roundabound.cfg``` if omitted, verbosity is
+```ERROR``` by default.

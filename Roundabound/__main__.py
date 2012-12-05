@@ -2,5 +2,4 @@ import sys
 from . import main
 import logging
 
-logging.basicConfig(level=logging.DEBUG)
-main(sys.argv)
+main(sys.argv[1:len(sys.argv)])
