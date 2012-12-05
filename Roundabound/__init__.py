@@ -5,7 +5,7 @@ import os
 import os.path
 import time
 import logging
-from zipfile import ZipFile
+import zipfile
 
 class LogRotationError(Exception):
     def __init__(self, message):
@@ -75,7 +75,7 @@ class RotationSet:
         logging.info('Archived %s to %s' % (filename, archived_name))
 
     def _do_archive(self, filename, archived_name, name):
-        with ZipFile(archived_name, 'w') as zip_file:
+        with zipfile.ZipFile(archived_name, 'w', zipfile.ZIP_DEFLATED) as zip_file:
             zip_file.write(filename, name)
 
         os.remove(filename)
